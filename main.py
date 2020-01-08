@@ -8,11 +8,11 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.ui.pushButton.clicked.connect(self.add_item)
+        self.ui.add_item.clicked.connect(self.add_item)
 
     def add_item(self):
-        input_text = self.ui.lineEdit.text()
-        self.ui.List.addItem(input_text)
+        input_text = self.ui.new_item_input.text()
+        self.ui.grocery_list.addItem(input_text)
         print(input_text)
 
 if __name__ == "__main__":
