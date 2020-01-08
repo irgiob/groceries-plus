@@ -9,6 +9,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+NUM_ITEM_OPTIONS = 4
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -51,21 +52,17 @@ class Ui_MainWindow(object):
         self.item_info.setRowCount(4)
         self.item_info.setColumnCount(2)
         self.item_info.setObjectName("item_info")
-        item = QtWidgets.QTableWidgetItem()
-        self.item_info.setItem(0, 0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.item_info.setItem(1, 0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.item_info.setItem(2, 0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.item_info.setItem(3, 0, item)
+        for i in range(2):
+            for j in range(NUM_ITEM_OPTIONS):
+                item = QtWidgets.QTableWidgetItem()
+                self.item_info.setItem(j, i, item)
         self.item_info.horizontalHeader().setVisible(False)
         self.item_info.horizontalHeader().setCascadingSectionResizes(False)
-        self.item_info.horizontalHeader().setDefaultSectionSize(215)
+        self.item_info.horizontalHeader().setDefaultSectionSize(214)
         self.item_info.horizontalHeader().setMinimumSectionSize(25)
         self.item_info.verticalHeader().setVisible(False)
         self.item_info.verticalHeader().setCascadingSectionResizes(False)
-        self.item_info.verticalHeader().setDefaultSectionSize(48)
+        self.item_info.verticalHeader().setDefaultSectionSize(47)
         self.delete_button = QtWidgets.QPushButton(self.centralwidget)
         self.delete_button.setGeometry(QtCore.QRect(660, 260, 113, 32))
         self.delete_button.setObjectName("delete_button")
@@ -136,7 +133,7 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Include in list?"))
         self.item_info.setSortingEnabled(__sortingEnabled)
         self.delete_button.setText(_translate("MainWindow", "Delete Item"))
-        self.edit_button.setText(_translate("MainWindow", "Edit Info"))
+        self.edit_button.setText(_translate("MainWindow", "Update Info"))
         self.info_label.setText(_translate("MainWindow", "Item Info"))
         self.add_item_label.setText(_translate("MainWindow", "Add new item"))
         self.export_button.setText(_translate("MainWindow", "Export Grocery List"))
