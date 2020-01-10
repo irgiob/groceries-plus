@@ -1,3 +1,4 @@
 .DS_Store
 __pycache__/
 data.txt
+groceries_plus_gui.ui
