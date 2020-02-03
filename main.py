@@ -22,6 +22,9 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.add_item_button.clicked.connect(self.add_item)
         self.ui.delete_button.clicked.connect(self.del_item)
 
+        # scrape prices online
+        self.ui.scrape_price_button.clicked.connect(self.scrape_prices)
+
         # update item info
         self.ui.edit_button.clicked.connect(self.update_item)
 
@@ -104,6 +107,20 @@ class mywindow(QtWidgets.QMainWindow):
         # adds the text to the list
         added_item.setText(input_text)
         self.ui.grocery_list.addItem(added_item)
+
+    def scrape_prices(self):
+        msg = QtWidgets.QMessageBox()
+        msg.setWindowTitle("Check Online Prices")
+        msg.setText("Online Prices")
+        #msg.setStandardButtons(QtWidgets.QMessageBox.Cancel|QtWidgets.QMessageBox.Retry|QtWidgets.QMessageBox.Ignore|)
+        msg.setDefaultButton(QtWidgets.QMessageBox.Retry)
+        msg.setInformativeText("Prices scraped off Woolworths Website")
+        msg.setDetailedText("This is where the online prices will be displayed")
+        msg.buttonClicked.connect(self.popup_button)
+        x = msg.exec()
+
+    def popup_button(self, i):
+        print(i.text())
 
     # delete item from grocery list & data file, including info panel
     def del_item(self):
