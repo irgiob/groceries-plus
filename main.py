@@ -1,10 +1,17 @@
 from PyQt5 import QtWidgets, QtCore
 from gui import Ui_MainWindow
+from scrape_gui import Ui_Scraper
 import sys
 import json
 import pyperclip
 
 NUM_ITEM_OPTIONS = 4
+
+class scrape_gui(QtWidgets.QMainWindow):
+    def __init__(self, parent=None):
+        super(scrape_gui, self).__init__(parent)
+        self.ui = Ui_Scraper()
+        self.ui.setupUi(self)
 
 class mywindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -12,6 +19,7 @@ class mywindow(QtWidgets.QMainWindow):
         super(mywindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.scrape_window = scrape_gui(self)
         self.data = self.open_grocery_list()
 
         # add & delete item functions
@@ -109,18 +117,7 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.grocery_list.addItem(added_item)
 
     def scrape_prices(self):
-        msg = QtWidgets.QMessageBox()
-        msg.setWindowTitle("Check Online Prices")
-        msg.setText("Online Prices")
-        #msg.setStandardButtons(QtWidgets.QMessageBox.Cancel|QtWidgets.QMessageBox.Retry|QtWidgets.QMessageBox.Ignore|)
-        msg.setDefaultButton(QtWidgets.QMessageBox.Retry)
-        msg.setInformativeText("Prices scraped off Woolworths Website")
-        msg.setDetailedText("This is where the online prices will be displayed")
-        msg.buttonClicked.connect(self.popup_button)
-        x = msg.exec()
-
-    def popup_button(self, i):
-        print(i.text())
+        self.scrape_window.show()
 
     # delete item from grocery list & data file, including info panel
     def del_item(self):
