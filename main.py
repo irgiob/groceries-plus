@@ -1,17 +1,49 @@
 from PyQt5 import QtWidgets, QtCore
 from gui import Ui_MainWindow
 from scrape_gui import Ui_Scraper
+from scraper import get_data_woolworths
 import sys
 import json
 import pyperclip
 
 NUM_ITEM_OPTIONS = 4
+SEARCH_URL = "https://www.woolworths.com.au/shop/search/products?searchTerm="
 
 class scrape_gui(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super(scrape_gui, self).__init__(parent)
         self.ui = Ui_Scraper()
         self.ui.setupUi(self)
+        self.search_item = None
+        self.search_results = None
+
+        self.ui.listWidget.itemClicked.connect(self.open_scraped_item)
+
+    def get_prices(self):
+        results = get_data_woolworths(self.search_item, SEARCH_URL)
+        self.search_results = results
+        print(results)
+        if len(results) == 0:
+            error = QtWidgets.QMessageBox()
+            error.setText('No products found with that name')
+            error.setWindowTitle('Name Error')
+            error.buttonClicked.connect(self.close)
+            x = error.exec()
+            return
+        else:
+            for item in results:
+                added_item = QtWidgets.QListWidgetItem()
+                added_item.setText(item['Name'])
+                self.ui.listWidget.addItem(added_item)
+
+    def open_scraped_item(self, item):
+        print(item.text())
+        for j in self.search_results:
+            if j['Name'] == item.text():
+                input_keys = ['Name','Price','Discount']
+                for i in range(len(input_keys)):
+                    row = self.ui.tableWidget.item(i, 0)
+                    row.setText(str(j[input_keys[i]]))
 
 class mywindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -117,7 +149,17 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.grocery_list.addItem(added_item)
 
     def scrape_prices(self):
-        self.scrape_window.show()
+        name = self.ui.new_item_input.text().capitalize()
+        if len(name) == 0:
+            error = QtWidgets.QMessageBox()
+            error.setText('Error: No item to search, type in item name input to search for a product')
+            error.setWindowTitle('Name Error')
+            x = error.exec()
+            return
+        else:
+            self.scrape_window.search_item = name
+            self.scrape_window.show()
+            self.scrape_window.get_prices()
 
     # delete item from grocery list & data file, including info panel
     def del_item(self):

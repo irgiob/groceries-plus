@@ -15,7 +15,6 @@ def get_html(item, search_url):
     #chrome_options.add_experimental_option('excludeSwitches', ['enable-automation']) 
     driver = webdriver.Chrome(executable_path="./chromedriver",options=chrome_options)
     driver.get(search_url)
-    #time.sleep(5)
     html = driver.page_source
     driver.close()
     driver.quit()
@@ -33,9 +32,9 @@ def get_data_woolworths(item, website_url):
         print(filtered_data)
         prod_data['Name'] = filtered_data[0]
         if filtered_data[2].split()[0] == 'Save':
-            prod_price = '$'+''.join(filtered_data[4:7])
+            prod_price = '$'+''.join(filtered_data[5:8])
             prod_data['Discount'] = filtered_data[2].split()[1]
-            prod_data['Quantity'] = filtered_data[8]
+            prod_data['Quantity'] = filtered_data[9]
         else:
             prod_price = '$'+''.join(filtered_data[3:6])
             prod_data['Discount'] = None
@@ -43,6 +42,3 @@ def get_data_woolworths(item, website_url):
         prod_data['Price'] = prod_price
         results.append(prod_data)
     return results
-
-item = 'lipton ice lemon tea'
-print(get_data_woolworths(item, WOOL_URL))

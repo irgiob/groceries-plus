@@ -9,6 +9,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+NUM_ITEM_OPTIONS = 3
 
 class Ui_Scraper(object):
     def setupUi(self, Dialog):
@@ -21,6 +22,9 @@ class Ui_Scraper(object):
         self.buttonBox.setObjectName("buttonBox")
         self.listWidget = QtWidgets.QListWidget(Dialog)
         self.listWidget.setGeometry(QtCore.QRect(10, 10, 191, 271))
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.listWidget.setFont(font)
         self.listWidget.setObjectName("listWidget")
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(230, 20, 131, 16))
@@ -47,6 +51,11 @@ class Ui_Scraper(object):
         self.tableWidget.horizontalHeader().setDefaultSectionSize(85)
         self.tableWidget.verticalHeader().setDefaultSectionSize(54)
         self.tableWidget.verticalHeader().setMinimumSectionSize(21)
+
+        for j in range(NUM_ITEM_OPTIONS):
+            item = QtWidgets.QTableWidgetItem()
+            item.setText("WOO")
+            self.tableWidget.setItem(j-1, 1, item)
 
         self.retranslateUi(Dialog)
         #self.buttonBox.accepted.connect(Dialog.accept)
