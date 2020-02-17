@@ -14,7 +14,7 @@ NUM_ITEM_OPTIONS = 3
 class Ui_Scraper(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(400, 300)
+        Dialog.resize(550,300)
         self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
         self.buttonBox.setGeometry(QtCore.QRect(40, 250, 341, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -22,6 +22,7 @@ class Ui_Scraper(object):
         self.buttonBox.setObjectName("buttonBox")
         self.listWidget = QtWidgets.QListWidget(Dialog)
         self.listWidget.setGeometry(QtCore.QRect(10, 10, 191, 271))
+        self.listWidget.setWordWrap(True)
         font = QtGui.QFont()
         font.setPointSize(18)
         self.listWidget.setFont(font)
@@ -33,7 +34,7 @@ class Ui_Scraper(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.tableWidget = QtWidgets.QTableWidget(Dialog)
-        self.tableWidget.setGeometry(QtCore.QRect(220, 50, 161, 192))
+        self.tableWidget.setGeometry(QtCore.QRect(220, 50, 300, 192))
         font = QtGui.QFont()
         font.setPointSize(15)
         self.tableWidget.setFont(font)
@@ -48,13 +49,13 @@ class Ui_Scraper(object):
         self.tableWidget.setVerticalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
-        self.tableWidget.horizontalHeader().setDefaultSectionSize(85)
+        self.tableWidget.horizontalHeader().setDefaultSectionSize(220)
         self.tableWidget.verticalHeader().setDefaultSectionSize(54)
         self.tableWidget.verticalHeader().setMinimumSectionSize(21)
 
         for j in range(NUM_ITEM_OPTIONS):
             item = QtWidgets.QTableWidgetItem()
-            item.setText("WOO")
+            item.setText("")
             self.tableWidget.setItem(j-1, 1, item)
 
         self.retranslateUi(Dialog)

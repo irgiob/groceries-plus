@@ -31,14 +31,13 @@ def get_data_woolworths(item, website_url):
         filtered_data = list(filter(None,[i.strip() for i in product.text.splitlines() if i]))
         print(filtered_data)
         prod_data['Name'] = filtered_data[0]
-        if filtered_data[2].split()[0] == 'Save':
-            prod_price = '$'+''.join(filtered_data[5:8])
-            prod_data['Discount'] = filtered_data[2].split()[1]
-            prod_data['Quantity'] = filtered_data[9]
+        for i in range(len(filtered_data)):
+            if filtered_data[i] == '$':
+                prod_data['Price'] = ''.join(filtered_data[i:i+4])
+                prod_data['Quantity'] = filtered_data[i+4]
+        if len(filtered_data) > 7:
+            prod_data['Discount'] = True
         else:
-            prod_price = '$'+''.join(filtered_data[3:6])
-            prod_data['Discount'] = None
-            prod_data['Quantity'] = filtered_data[6]
-        prod_data['Price'] = prod_price
+            prod_data['Discount'] = False
         results.append(prod_data)
     return results
